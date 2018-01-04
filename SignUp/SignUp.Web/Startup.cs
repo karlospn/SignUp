@@ -21,8 +21,10 @@ namespace SignUp.Web
         {
             services.AddMvc();
 
-            var connection = @"Server=(localdb)\v11.0;Database=SignUp;Trusted_Connection=True;ConnectRetryCount=0";
-            services.AddDbContext<UserContext>(options => options.UseSqlServer(connection));
+            var connection = @"Server=signup.mysql;Database=SignUp;Uid=web;Pwd=somepass";
+            services.AddDbContext<UserContext>(x => x.UseMySql(connection));
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

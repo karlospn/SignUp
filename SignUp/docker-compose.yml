@@ -4,5 +4,21 @@ services:
   signup.web:
     image: signup.web
     build:
-      context: ./SignUp.Web
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile-Web
+    ports:
+       - "3300:80"
+  signup.mysql:
+    image: signup.mysql
+    build:
+      context: ./SignUp.MySql
+      dockerfile: Dockerfile-MySql
+    volumes:
+       - /c/Users/Usuario/Documents/MySqlData:/var/lib/mysql
+    environment:
+       MYSQL_ROOT_PASSWORD: 'signuppass'
+       MYSQL_DATABASE: 'SignUp'
+       MYSQL_USER: 'web'
+       MYSQL_PASSWORD: 'somepass'
+    ports:
+       - "3306:3306"
