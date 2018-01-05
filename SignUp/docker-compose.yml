@@ -10,6 +10,8 @@ services:
        - "3300:80"
     networks:
        - signup-network
+    depends_on:
+       - signup.rabbit
 
   signup.mysql:
     image: signup.mysql
@@ -31,9 +33,12 @@ services:
   signup.rabbit:
     image: rabbitmq:3.6-management
     ports:
-      - "5672:5672"
       - "8080:15672"
-    hostname: my-rabbit
+    hostname: signup.rabbit
+    environment:
+      RABBITMQ_DEFAULT_USER: "user"
+      RABBITMQ_DEFAULT_PASS: "password"
+      RABBITMQ_DEFAULT_VHOST: "/"
     volumes:
       - /c/Users/Usuario/Documents/RabbitmqData:/var/lib/rabbitmq/mnesia
     networks:

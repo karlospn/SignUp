@@ -12,38 +12,19 @@ namespace SignUp.Web.RabbitMqManager
 
         public void SendUser(RegisteredUserEvent evt)
         {
-            var factory = new ConnectionFactory() { Uri = new Uri(RabbitMqConstants.RabbitMqUri) };
+            ConnectionFactory factory = new ConnectionFactory();
+            factory.Uri = new Uri(RabbitMqConstants.RabbitMqUri);
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-                channel.ExchangeDeclare(
-                    exchange: RabbitMqConstants.RegisterExchange,
+                channel.ExchangeDeclare(exchange: RabbitMqConstants.RegisterExchange,
                     type: ExchangeType.Direct);
-
-                channel.QueueDeclare(
-                    queue: RabbitMqConstants.RegisterQueue,
-                    durable: false,
-                    exclusive: false,
-                    autoDelete: false,
-                    arguments: null);
-
-                channel.QueueBind(
-                    queue: RabbitMqConstants.RegisterQueue,
-                    exchange: RabbitMqConstants.RegisterExchange,
-                    routingKey: "");
-
-                var serializedModel = JsonConvert.SerializeObject(evt);
-
-
-                var messageProperties = channel.CreateBasicProperties();
-                messageProperties.ContentType =
-                    RabbitMqConstants.JsonMimeType;
-
-                channel.BasicPublish(
-                    exchange: RabbitMqConstants.RegisterExchange,
+                string message = JsonConvert.SerializeObject(evt);
+                var body = Encoding.UTF8.GetBytes(message);
+                channel.BasicPublish(exchange: RabbitMqConstants.RegisterExchange,
                     routingKey: "",
-                    basicProperties: messageProperties,
-                    body: Encoding.UTF8.GetBytes(serializedModel));
+                    basicProperties: null,
+                    body: body);
             }
         }
 

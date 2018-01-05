@@ -7,7 +7,7 @@ namespace SignUp.Messaging.Constants
     public static class RabbitMqConstants
     {
         public const string RabbitMqUri =
-            "amqp://guest:guest@127.0.0.1:5672/";
+            "amqp://user:password@signup.rabbit:5672/";
         public const string JsonMimeType =
             "application/json";
 
