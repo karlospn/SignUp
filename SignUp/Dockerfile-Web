@@ -5,6 +5,7 @@ EXPOSE 80
 # Copy csproj and restore as distinct layers
 COPY *.sln ./
 COPY ./SignUp.Entities/*.csproj ./SignUp.Entities/
+COPY ./SignUp.Messaging.Constants/*.csproj ./SignUp.Messaging.Constants/
 COPY ./SignUp.Web/*.csproj ./SignUp.Web/
 RUN dotnet restore
 

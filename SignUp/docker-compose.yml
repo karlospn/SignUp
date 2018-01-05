@@ -8,6 +8,9 @@ services:
       dockerfile: Dockerfile-Web
     ports:
        - "3300:80"
+    networks:
+       - signup-network
+
   signup.mysql:
     image: signup.mysql
     build:
@@ -22,3 +25,20 @@ services:
        MYSQL_PASSWORD: 'somepass'
     ports:
        - "3306:3306"
+    networks:
+       - signup-network
+
+  signup.rabbit:
+    image: rabbitmq:3.6-management
+    ports:
+      - "5672:5672"
+      - "8080:15672"
+    hostname: my-rabbit
+    volumes:
+      - /c/Users/Usuario/Documents/RabbitmqData:/var/lib/rabbitmq/mnesia
+    networks:
+       - signup-network
+
+networks:
+  signup-network:
+    driver: bridge

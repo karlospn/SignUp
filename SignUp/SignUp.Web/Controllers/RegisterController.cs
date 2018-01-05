@@ -2,6 +2,8 @@
 using Microsoft.ApplicationInsights.Extensibility.Implementation;
 using Microsoft.AspNetCore.Mvc;
 using SignUp.Entities;
+using SignUp.Messaging.Constants;
+using SignUp.Messaging.Constants.Events;
 using SignUp.Web.Models;
 using UserContext = SignUp.Web.Context.UserContext;
 
@@ -25,11 +27,14 @@ namespace SignUp.Web.Controllers
         [HttpPost]
         public ActionResult Save(UserViewModel vm)
         {
-            var user = MapUser(vm);
-            _ctx.Users.Add(user);
-            _ctx.SaveChanges();
 
-            return View(user);
+            var manager = new RabbitMqManager.RabbitMqManager();
+            manager.SendUser(new RegisteredUserEvent
+            {
+                User = MapUser(vm)
+            });
+
+            return View();
         }
 
 
