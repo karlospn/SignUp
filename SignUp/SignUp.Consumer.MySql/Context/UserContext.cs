@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SignUp.Entities;
 
-namespace SignUp.Web.Context
+namespace SignUp.Consumers.Context
 {
     public class UserContext : DbContext
     {

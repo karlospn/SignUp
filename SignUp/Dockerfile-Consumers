@@ -1,0 +1,19 @@
+FROM microsoft/aspnetcore-build:2.0 AS build-env
+WORKDIR /app
+EXPOSE 80 
+
+# Copy csproj and restore as distinct layers
+COPY *.sln ./
+COPY ./SignUp.Entities/*.csproj ./SignUp.Entities/
+COPY ./SignUp.Messaging.Constants/*.csproj ./SignUp.Messaging.Constants/
+RUN dotnet restore
+
+# Copy everything else and build
+COPY . ./
+RUN dotnet publish SignUp.Consumer.MySql/*.csproj -c Release -o out
+
+# Build runtime image
+FROM microsoft/aspnetcore:2.0
+WORKDIR /app
+COPY --from=build-env /app/SignUp.Consumer.MySql/out .
+ENTRYPOINT ["dotnet", "SignUp.Consumers.dll"]

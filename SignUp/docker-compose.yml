@@ -33,6 +33,7 @@ services:
   signup.rabbit:
     image: rabbitmq:3.6-management
     ports:
+      - "5672:5672"
       - "8080:15672"
     hostname: signup.rabbit
     environment:
@@ -43,6 +44,18 @@ services:
       - /c/Users/Usuario/Documents/RabbitmqData:/var/lib/rabbitmq/mnesia
     networks:
        - signup-network
+
+  signup.consumers:
+    image: signup.consumers
+    build:
+      context: .
+      dockerfile: Dockerfile-Consumers
+    ports:
+       - "3301:80"
+    networks:
+       - signup-network
+    depends_on:
+       - signup.rabbit
 
 networks:
   signup-network:
