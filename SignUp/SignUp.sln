@@ -13,13 +13,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SignUp.MySql", "SignUp.MySq
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{843545F2-7462-4C5C-AA57-85C84D23BA0D}"
 	ProjectSection(SolutionItems) = preProject
-		Dockerfile-Consumers = Dockerfile-Consumers
+		Dockerfile-Consumer-MySql = Dockerfile-Consumer-MySql
 		Dockerfile-Web = Dockerfile-Web
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SignUp.Messaging.Constants", "SignUp.Messaging.Constants\SignUp.Messaging.Constants.csproj", "{9809BC44-CDC7-4DD8-B7CC-87C6BE356E25}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SignUp.Consumers", "SignUp.Consumer.MySql\SignUp.Consumers.csproj", "{A3A468C5-95B0-4320-A743-17B6426023F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SignUp.Consumer.MySql", "SignUp.Consumer.MySql\SignUp.Consumer.MySql.csproj", "{A3A468C5-95B0-4320-A743-17B6426023F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignUp.Consumer.ElasticSearch", "SignUp.Consumer.ElasticSearch\SignUp.Consumer.ElasticSearch.csproj", "{E8624ACD-3730-4818-8C8C-2978C283D1EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{A3A468C5-95B0-4320-A743-17B6426023F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3A468C5-95B0-4320-A743-17B6426023F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3A468C5-95B0-4320-A743-17B6426023F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8624ACD-3730-4818-8C8C-2978C283D1EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8624ACD-3730-4818-8C8C-2978C283D1EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8624ACD-3730-4818-8C8C-2978C283D1EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8624ACD-3730-4818-8C8C-2978C283D1EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

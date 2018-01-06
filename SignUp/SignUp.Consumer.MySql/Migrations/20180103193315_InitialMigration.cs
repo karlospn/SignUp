@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace SignUp.Consumers.Migrations
+namespace SignUp.Consumer.MySql.Migrations
 {
     public partial class InitialMigration : Migration
     {

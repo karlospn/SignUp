@@ -16,4 +16,4 @@ RUN dotnet publish SignUp.Consumer.MySql/*.csproj -c Release -o out
 FROM microsoft/aspnetcore:2.0
 WORKDIR /app
 COPY --from=build-env /app/SignUp.Consumer.MySql/out .
-ENTRYPOINT ["dotnet", "SignUp.Consumers.dll"]
+ENTRYPOINT ["dotnet", "SignUp.Consumer.MySql.dll"]

@@ -1,13 +1,16 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SignUp.Consumer.MySql.Context;
-using SignUp.Consumer.MySql.HostedServices;
+using SignUp.Consumer.ElasticSearch.Configuration;
+using SignUp.Consumer.ElasticSearch.HostedServices;
 
-namespace SignUp.Consumer.MySql
+namespace SignUp.Consumer.ElasticSearch
 {
     public class Startup
     {
@@ -21,10 +24,10 @@ namespace SignUp.Consumer.MySql
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<ESOptions>(Configuration.GetSection("ElasticSearch"));
+            services.AddSingleton<ESClientProvider>();
+            services.AddSingleton<IHostedService, PublishToElasticSearchService>();
             services.AddMvc();
-            services.AddSingleton<IHostedService, PublishToMySqlService>();
-            var connection = @"Server=signup.mysql;Database=SignUp;Uid=web;Pwd=somepass";
-            services.AddDbContext<UserContext>(x => x.UseMySql(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

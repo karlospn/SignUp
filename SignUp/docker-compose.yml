@@ -49,7 +49,7 @@ services:
     image: signup.consumers
     build:
       context: .
-      dockerfile: Dockerfile-Consumers
+      dockerfile: Dockerfile-Consumer-MySql
     ports:
        - "3301:80"
     networks:

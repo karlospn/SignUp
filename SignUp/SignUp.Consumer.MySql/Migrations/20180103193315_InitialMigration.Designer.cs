@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using SignUp.Consumers.Context;
+using SignUp.Consumer.MySql.Context;
 
-namespace SignUp.Consumers.Migrations
+namespace SignUp.Consumer.MySql.Migrations
 {
     [DbContext(typeof(UserContext))]
     [Migration("20180103193315_InitialMigration")]

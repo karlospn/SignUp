@@ -15,6 +15,8 @@ namespace SignUp.Messaging.Constants
             "signup.management.register.exchange";
         public const string RegisterQueue =
             "signup.management.register.queue";
+        public const string ElasticQueue =
+            "signup.management.elastics.queue";
 
     }
 }

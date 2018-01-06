@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.ApplicationInsights.Extensibility.Implementation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SignUp.Messaging.Constants;
 using SignUp.Messaging.Constants.Events;
 using SignUp.Messaging.Constants.RabbitMqManager;
-using UserContext = SignUp.Consumers.Context.UserContext;
+using UserContext = SignUp.Consumer.MySql.Context.UserContext;
 
-namespace SignUp.Consumers.HostedServices
+namespace SignUp.Consumer.MySql.HostedServices
 {
-    public class MySqlInsertService : IHostedService
+    public class PublishToMySqlService : IHostedService
     {
         private int _milisecondsDelay = 1000;
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public MySqlInsertService(IServiceScopeFactory serviceScopeFactory)
+        public PublishToMySqlService(IServiceScopeFactory serviceScopeFactory)
         {
             _serviceScopeFactory = serviceScopeFactory;
         }
@@ -24,13 +24,15 @@ namespace SignUp.Consumers.HostedServices
         {
             while (!cancellationToken.IsCancellationRequested)
             {
-                var rabbitManager = new RabbitMqManager<RegisteredUserEvent>();
-                var msg = rabbitManager.Consume();
-                if (msg != null)
+                try
                 {
-                    await SaveMsgIntoDatabaseAsync(msg);
-                }
-
+                    var rabbitManager = new RabbitMqManager<RegisteredUserEvent>();
+                    rabbitManager.Consume(RabbitMqConstants.RegisterQueue, SaveMsgIntoDatabaseAsync);
+                                  
+                }catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }             
                 await Task.Delay(_milisecondsDelay, cancellationToken);
             }
         }
@@ -41,13 +43,13 @@ namespace SignUp.Consumers.HostedServices
         }
 
 
-        private async Task SaveMsgIntoDatabaseAsync(RegisteredUserEvent msg)
+        private async Task<int> SaveMsgIntoDatabaseAsync(RegisteredUserEvent msg)
         {
             using (var scope = _serviceScopeFactory.CreateScope())
             {
                 var ctx = scope.ServiceProvider.GetService<UserContext>();
                 ctx.Users.Add(msg.User);
-                await ctx.SaveChangesAsync();
+                return await ctx.SaveChangesAsync();
             }
         }
     }

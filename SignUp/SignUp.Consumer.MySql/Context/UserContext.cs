@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SignUp.Entities;
 
-namespace SignUp.Consumers.Context
+namespace SignUp.Consumer.MySql.Context
 {
     public class UserContext : DbContext
     {

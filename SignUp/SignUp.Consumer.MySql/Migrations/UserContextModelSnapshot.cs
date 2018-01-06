@@ -4,9 +4,9 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using SignUp.Consumers.Context;
+using SignUp.Consumer.MySql.Context;
 
-namespace SignUp.Consumers.Migrations
+namespace SignUp.Consumer.MySql.Migrations
 {
     [DbContext(typeof(UserContext))]
     partial class UserContextModelSnapshot : ModelSnapshot
