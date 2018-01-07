@@ -16,7 +16,8 @@ namespace SignUp.Messaging.Constants.RabbitMqManager
             using (var channel = connection.CreateModel())
             {
                 channel.ExchangeDeclare(exchange: RabbitMqConstants.RegisterExchange,
-                    type: ExchangeType.Fanout);
+                    type: ExchangeType.Fanout,
+                    durable: true);
                 string message = JsonConvert.SerializeObject(evt);
                 var body = Encoding.UTF8.GetBytes(message);
                 channel.BasicPublish(exchange: RabbitMqConstants.RegisterExchange,
